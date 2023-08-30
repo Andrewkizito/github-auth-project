@@ -3,10 +3,6 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useAuth } from "../utils/useAuth";
 
-// Github TokenS & API
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "../config/oauth";
-import api from "../config/axios";
-
 // UI Components
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import Loader from "../components/Loader";
@@ -15,6 +11,7 @@ import { NavLink } from "react-router-dom";
 // Notification Components
 import { notificationConfig } from "../utils/reusables";
 import { Store } from "react-notifications-component";
+import api from "../config/server";
 
 const Auth = () => {
   const auth = useAuth();
@@ -27,9 +24,7 @@ const Auth = () => {
 
       if (code) {
         api
-          .post("/access_token", {
-            client_id: GITHUB_CLIENT_ID,
-            client_secret: GITHUB_CLIENT_SECRET,
+          .post("auth/callback", {
             code,
           })
           .then(({ data }) => {
@@ -45,9 +40,6 @@ const Auth = () => {
 
             // Saving token in global state
             auth.updateToken(data.access_token);
-
-            // Navigate to a different route
-            window.location.href = "/dashboard";
           })
           .catch((error) => {
             Store.addNotification({
@@ -70,6 +62,8 @@ const Auth = () => {
       setLoading(false);
     }
   }, [setCookie, loading, auth]);
+
+  console.log(auth);
 
   return (
     <div className="relative w-screen h-screen bg-gray-100">
