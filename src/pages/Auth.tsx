@@ -48,14 +48,6 @@ const Auth = () => {
               message: "Logged In Successfully",
             });
           })
-          .catch((error) => {
-            Store.addNotification({
-              ...notificationConfig,
-              title: "Error",
-              message: `Error getting access token: ${error}`,
-              type: "danger",
-            });
-          });
       } else {
         auth.updateToken(null);
         navigate("/");
