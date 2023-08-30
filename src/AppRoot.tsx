@@ -17,14 +17,19 @@ function AppRoot() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth.token && cookies.github_access_token) {
-      auth.updateToken(cookies.github_access_token);
+    const userAccessToken = cookies.github_access_token;
+    if (!auth.token && userAccessToken) {
+      auth.updateToken(userAccessToken);
+      navigate("/dashboard");
+    } else {
+      navigate(auth.token ? "/dashboard" : "/login");
     }
   }, [auth.token, navigate, cookies, auth]);
 
   return (
     <Routes>
-      <Route path="/" element={auth.token ? <Login /> : <Dashboard />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/callback" element={<Auth />} />
     </Routes>
   );
