@@ -12,7 +12,7 @@ import Loader from "../components/Loader";
 import { NavLink } from "react-router-dom";
 
 // Notification Components
-import { notification } from "../utils/reusables";
+import { notificationConfig } from "../utils/reusables";
 import { Store } from "react-notifications-component";
 
 const Auth = () => {
@@ -46,7 +46,7 @@ const Auth = () => {
           })
           .catch((error) => {
             Store.addNotification({
-              ...notification,
+              ...notificationConfig,
               title: "Error",
               message: `Error getting access token: ${error}`,
               type: "danger",
@@ -54,7 +54,7 @@ const Auth = () => {
           });
       } else {
         Store.addNotification({
-          ...notification,
+          ...notificationConfig,
           title: "Error",
           message: "No Code Found",
           type: "danger",
