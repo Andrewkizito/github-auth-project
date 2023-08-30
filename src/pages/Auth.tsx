@@ -2,19 +2,20 @@
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useAuth } from "../utils/useAuth";
+import api from "../config/server";
 
 // UI Components
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 
 // Notification Components
 import { notificationConfig } from "../utils/reusables";
 import { Store } from "react-notifications-component";
-import api from "../config/server";
 
 const Auth = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
   const [, setCookie] = useCookies(["github_access_token"]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -50,20 +51,13 @@ const Auth = () => {
             });
           });
       } else {
-        Store.addNotification({
-          ...notificationConfig,
-          title: "Error",
-          message: "No Code Found",
-          type: "danger",
-        });
         auth.updateToken(null);
+        navigate("/");
       }
 
       setLoading(false);
     }
-  }, [setCookie, loading, auth]);
-
-  console.log(auth);
+  }, [loading, auth, navigate, setCookie]);
 
   return (
     <div className="relative w-screen h-screen bg-gray-100">
