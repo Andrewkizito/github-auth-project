@@ -41,6 +41,12 @@ const Auth = () => {
 
             // Saving token in global state
             auth.updateToken(data.access_token);
+
+            Store.addNotification({
+              ...notificationConfig,
+              title: "Success",
+              message: "Logged In Successfully",
+            });
           })
           .catch((error) => {
             Store.addNotification({
