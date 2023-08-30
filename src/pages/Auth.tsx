@@ -5,8 +5,8 @@ import { useAuth } from "../utils/useAuth";
 
 // UI Components
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import Loader from "../components/Loader";
 import { NavLink } from "react-router-dom";
+import Loader from "../components/Loader";
 
 // Notification Components
 import { notificationConfig } from "../utils/reusables";
