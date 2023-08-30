@@ -6,14 +6,25 @@ import { redirect } from "react-router-dom";
 
 // UI Components
 import { IoLogoGithub } from "react-icons/io5";
-import { GITHUB_CLIENT_ID } from "../config/oauth";
 import { useAuth } from "../utils/useAuth";
+import { Store } from "react-notifications-component";
+import { notificationConfig } from "../utils/reusables";
 
 const Login = () => {
   const auth = useAuth();
 
   function handleAuth() {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`;
+    const githubClientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
+    if (githubClientId) {
+      window.location.href = `https://github.com/login/oauth/authorize?client_id=${githubClientId}`;
+    } else {
+      Store.addNotification({
+        ...notificationConfig,
+        title: "Error",
+        message: "Github client id not found",
+        type: "danger",
+      });
+    }
   }
 
   useEffect(() => {
