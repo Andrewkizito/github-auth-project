@@ -1,11 +1,27 @@
+// Hooks
+import { useEffect } from "react";
+
+// Router
+import { redirect } from "react-router-dom";
+
 // UI Components
 import { IoLogoGithub } from "react-icons/io5";
 import { GITHUB_CLIENT_ID } from "../config/oauth";
+import { useAuth } from "../utils/useAuth";
 
 const Login = () => {
+  const auth = useAuth();
+
   function handleAuth() {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`;
   }
+
+  useEffect(() => {
+    // Redirecting user if their auth token still exists
+    if (auth.token) {
+      redirect("/dashboard");
+    }
+  }, [auth]);
 
   return (
     <div className="relative w-screen h-screen bg-gray-100">
