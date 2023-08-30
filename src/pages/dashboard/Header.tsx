@@ -6,7 +6,7 @@ import { useAuth } from "../../utils/useAuth";
 const Header = () => {
   const auth = useAuth();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookies, setCookie] = useCookies();
+  const [_, setCookie] = useCookies();
 
   function logout() {
     setCookie("github_access_token", null);
@@ -19,7 +19,7 @@ const Header = () => {
         <img src="/vite.svg" alt="" className="h-10" />
         <ul className="flex items-center gap-3">
           <IoLogOutOutline
-            className="text-gray-600 text-2xl"
+            className="text-gray-600 text-2xl cursor-pointer hover:text-red"
             onClick={logout}
           />
         </ul>
