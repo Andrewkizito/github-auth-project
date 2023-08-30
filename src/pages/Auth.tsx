@@ -1,6 +1,7 @@
 // Hooks
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { useAuth } from "../utils/useAuth";
 
 // Github TokenS & API
 import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "../config/oauth";
@@ -16,6 +17,7 @@ import { notificationConfig } from "../utils/reusables";
 import { Store } from "react-notifications-component";
 
 const Auth = () => {
+  const auth = useAuth();
   const [, setCookie] = useCookies(["github_access_token"]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -41,6 +43,9 @@ const Auth = () => {
               path: "/",
             });
 
+            // Saving token in global state
+            auth.updateToken(data.access_token);
+
             // Navigate to a different route
             window.location.href = "/dashboard";
           })
@@ -59,11 +64,12 @@ const Auth = () => {
           message: "No Code Found",
           type: "danger",
         });
+        auth.updateToken(null);
       }
 
       setLoading(false);
     }
-  }, [setCookie, loading]);
+  }, [setCookie, loading, auth]);
 
   return (
     <div className="relative w-screen h-screen bg-gray-100">
