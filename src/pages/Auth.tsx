@@ -39,6 +39,8 @@ const Auth = () => {
               path: "/",
             });
 
+            navigate("/dashboard")
+
             // Saving token in global state
             auth.updateToken(data.access_token);
 
@@ -46,7 +48,17 @@ const Auth = () => {
               ...notificationConfig,
               title: "Success",
               message: "Logged In Successfully",
+              type: "success"
             });
+          }).catch((err) => {
+            console.log(err)
+            Store.addNotification({
+              ...notificationConfig,
+              title: "Error",
+              message: "Something went wrong",
+              type: "danger"
+            });
+            navigate("/login")
           })
       }
 
