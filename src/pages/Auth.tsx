@@ -48,9 +48,6 @@ const Auth = () => {
               message: "Logged In Successfully",
             });
           })
-      } else {
-        auth.updateToken(null);
-        navigate("/");
       }
 
       setLoading(false);
