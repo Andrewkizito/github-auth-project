@@ -22,8 +22,8 @@ function AppRoot() {
     if (!auth.token && userAccessToken) {
       auth.updateToken(userAccessToken);
       navigate("/dashboard");
-    } else {
-        navigate(auth.token ? "/dashboard" : pathname === "/callback" ? pathname : "/login");
+    } else if(!auth.token && !userAccessToken && pathname !== "/callback"){
+      navigate('/login')
     }
   }, [auth.token, navigate, cookies, auth, pathname]);
 
