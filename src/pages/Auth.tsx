@@ -39,10 +39,10 @@ const Auth = () => {
               path: "/",
             });
 
-            navigate("/dashboard")
-
+            
             // Saving token in global state
             auth.updateToken(data.access_token);
+            navigate("/dashboard")
 
             Store.addNotification({
               ...notificationConfig,
